@@ -17,12 +17,12 @@ public class BuyerPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new BuyerMenu(), this);
         
         if (!setupEssentials()) {
-            getLogger().severe("Essentials не найден! Плагин будет отключен!");
+            getLogger().severe(Lang.console("plugin_disabled"));
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
         
-        getLogger().info("Плагин успешно загружен!");
+        getLogger().info(Lang.console("plugin_loaded"));
     }
 
     private boolean setupEssentials() {

@@ -10,36 +10,38 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Arrays;
+
 public class BuyerMenu implements Listener {
     public static void openMenu(Player player) {
-        Inventory inv = Bukkit.createInventory(null, 27, "§cСкупщик");
+        Inventory inv = Bukkit.createInventory(null, 27, Lang.t("menu_title", player));
 
         // Пшеница (фермер)
         ItemStack wheat = new ItemStack(Material.WHEAT);
         ItemMeta wheatMeta = wheat.getItemMeta();
-        wheatMeta.setDisplayName("§eФермер");
+        wheatMeta.setDisplayName(Lang.t("farmer", player));
         wheat.setItemMeta(wheatMeta);
         inv.setItem(11, wheat);
 
         // Алмаз (руды)
         ItemStack diamond = new ItemStack(Material.DIAMOND);
         ItemMeta diamondMeta = diamond.getItemMeta();
-        diamondMeta.setDisplayName("§bРуды");
+        diamondMeta.setDisplayName(Lang.t("ores", player));
         diamond.setItemMeta(diamondMeta);
         inv.setItem(13, diamond);
 
         // Порох (лут с мобов)
         ItemStack gunpowder = new ItemStack(Material.GUNPOWDER);
         ItemMeta gunpowderMeta = gunpowder.getItemMeta();
-        gunpowderMeta.setDisplayName("§7Лут с мобов");
+        gunpowderMeta.setDisplayName(Lang.t("mob_loot", player));
         gunpowder.setItemMeta(gunpowderMeta);
         inv.setItem(15, gunpowder);
 
         // Добавляем компас
         ItemStack compass = new ItemStack(Material.COMPASS);
         ItemMeta compassMeta = compass.getItemMeta();
-        compassMeta.setDisplayName("§eВернуться назад");
-        compassMeta.setLore(java.util.Arrays.asList("§7buyer сделан по просьбе орущих пидоров"));
+        compassMeta.setDisplayName(Lang.t("back", player));
+        compassMeta.setLore(Arrays.asList(Lang.t("compass_lore", player)));
         compass.setItemMeta(compassMeta);
         inv.setItem(26, compass);
 
@@ -52,10 +54,10 @@ public class BuyerMenu implements Listener {
         Player player = (Player) event.getWhoClicked();
         
         // Проверяем, что это наше меню
-        if (!event.getView().getTitle().contains("Скупщик") && 
-            !event.getView().getTitle().contains("Фермер") && 
-            !event.getView().getTitle().contains("Руды") && 
-            !event.getView().getTitle().contains("Лут с мобов")) {
+        if (!event.getView().getTitle().contains(Lang.t("menu_title", player).replace("§c", "")) && 
+            !event.getView().getTitle().contains(Lang.t("farmer", player).replace("§e", "")) && 
+            !event.getView().getTitle().contains(Lang.t("ores", player).replace("§b", "")) && 
+            !event.getView().getTitle().contains(Lang.t("mob_loot", player).replace("§7", ""))) {
             return;
         }
 
@@ -70,7 +72,7 @@ public class BuyerMenu implements Listener {
         boolean isShiftClick = event.isShiftClick();
 
         // Обработка кликов в главном меню
-        if (title.contains("Скупщик")) {
+        if (title.contains(Lang.t("menu_title", player).replace("§c", ""))) {
             if (clickedItem.getType() == Material.WHEAT) {
                 BuyerSubMenu.openFarmerMenu(player);
             } else if (clickedItem.getType() == Material.DIAMOND) {
@@ -90,7 +92,7 @@ public class BuyerMenu implements Listener {
 
             // Проверяем, есть ли у игрока этот предмет
             if (!player.getInventory().contains(clickedItem.getType())) {
-                player.sendMessage("§cУ вас нет этого предмета!");
+                player.sendMessage(Lang.t("no_item", player));
                 return;
             }
 

@@ -9,12 +9,12 @@ public class BuyerCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage("§cТолько игрок может использовать эту команду!");
+            sender.sendMessage(Lang.console("only_player"));
             return true;
         }
         Player player = (Player) sender;
         if (!player.hasPermission("buyer.use")) {
-            player.sendMessage("§cУмоляй меня чтоб я выдал тебе права!!");
+            player.sendMessage(Lang.t("no_permission", player));
             return true;
         }
         BuyerMenu.openMenu(player);
