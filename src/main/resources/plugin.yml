@@ -1,0 +1,13 @@
+name: Buyer
+main: org.example.BuyerPlugin
+version: 1.0
+api-version: 1.16
+depend: [Essentials]
+commands:
+  buyer:
+    description: Открыть меню скупщика
+    usage: /buyer 
+permissions:
+  buyer.use:
+    description: Позволяет использовать команду /buyer
+    default: true 
